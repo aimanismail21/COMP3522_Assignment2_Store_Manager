@@ -18,7 +18,7 @@ import datetime
 class Store:
     def __init__(self):
         # inventory of items
-        # record of orders (list)
+        self.order_records = ["fake data", "fakedate"]
         pass
 
     def read_order(self):
@@ -40,9 +40,13 @@ class Store:
         today = datetime.datetime.now()
         format_string = datetime.date.strftime(today, "DTR_%d%m%y_%H%M.txt")
         with open(format_string, mode="w", encoding="UTF-8") as file_output:
-            temp_list = ["dummy", "dummy"]
-            for item in temp_list:
-                file_output.write(item)
+            file_output.write("HOLIDAY STORE - DAILY TRANSACTION REPORT ("
+                              "DRT)\n")
+            file_output.write(datetime.datetime.strftime(
+                today,
+                "%d-%m-%Y %H:%M\n\n"))
+            for order in self.order_records:
+                file_output.write(order)
 
 if __name__ == '__main__':
     store = Store()
