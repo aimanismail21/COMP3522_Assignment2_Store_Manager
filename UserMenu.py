@@ -6,11 +6,13 @@ User Menu contains the logic to allow a user to do the following:
 This is likely the client
 """
 import traceback
+import Store
 
 user_menu_map = {
+    # these function pointers all reside in Store
         "1": "ProcessWebOrders",  # todo function should go here
         "2": "CheckInventory" , # todo function should go here
-        "3": exit  # exit the program todo may need some clean up function
+        "3": "DailyTransactionReport"  # todo cleanup and transaction
     }
 class UserMenu():
     def prompt_menu(self):
