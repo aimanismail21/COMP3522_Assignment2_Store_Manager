@@ -5,7 +5,7 @@ Store contains the methods and classes responsible for:
 3. Creating Daily Transaction Report
 
 """
-
+import datetime
 
 
 # todo Special Requirements
@@ -35,7 +35,17 @@ class Store:
 
     def daily_transaction_report(self):
         # create a text file
-        # text file is a list of recorded orders in the day
-        # convention
-        pass
+        # text file is a list of reco   rded orders in the day
+        # convention DTR_DDMMYY_HHMM.txt
+        today = datetime.datetime.now()
+        format_string = datetime.date.strftime(today, "DTR_%d%m%y_%H%M.txt")
+        with open(format_string, mode="w", encoding="UTF-8") as file_output:
+            temp_list = ["dummy", "dummy"]
+            for item in temp_list:
+                file_output.write(item)
+
+if __name__ == '__main__':
+    store = Store()
+    store.daily_transaction_report()
+
 
