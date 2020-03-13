@@ -19,8 +19,15 @@ class OrderProcessor:
     """
     An Order Processor is an object that is responsible for reading a order
     file to create an Order object.
+
+    Factory Object?
     """
-    pass
+    def __init__(self):
+        pass
+
+    def read_order(self):
+        pass
+
 
 class Order:
     """
