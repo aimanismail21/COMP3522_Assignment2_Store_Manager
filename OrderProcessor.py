@@ -1,6 +1,7 @@
 """
 Contains all the classes and logic related to orders, reading order files.
 """
+
 class OrderProcessor:
     """
     An Order Processor is an object that is responsible for reading a order
@@ -28,3 +29,18 @@ class Order:
 # •	Name of the item
 # •	A dictionary of product details. These details are the rest of the attributes of the item as specified in the excel sheet EXCEPT the name of the holiday — Easter, Christmas or Halloween.
 # •	The order should also contain a reference to the appropriate Factory object that can create this item.
+
+# todo 9 factories to map and the mapping should return an instantiated
+#  concrete factory
+factory_mapping = {
+    1: "Create a factory for a specific type of item",
+    2: "2",
+    3: "3",
+    4: "",
+    5: "",
+    6: "",
+    7: "",
+    8: "",
+    9: ""
+
+}
