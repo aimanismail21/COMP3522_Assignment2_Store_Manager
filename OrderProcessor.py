@@ -18,9 +18,9 @@ class OrderProcessor:
 
 class Order:
     """
-    An Order is an analogy for an business transaction that orders a variety
-    of items with appropriate business attributes like order number,
-    product ids.
+    An Order is an analogy for an business transaction that orders
+    a variety of items with appropriate business attributes
+    like order number, product ids.
     """
 #  todo Add functionality
 # •	Order number
