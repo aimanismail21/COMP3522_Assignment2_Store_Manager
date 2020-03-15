@@ -13,7 +13,8 @@ class ItemFactory(ABC):
 
 class Toy(ABC):
     """
-    Toy defines the interface that the ItemFactory is responsible to create.
+    Toy defines the interface that the ItemFactory is responsible to
+    create.
     """
 
     def __init__(self, is_battery_operated, min_age, name, description,
@@ -32,10 +33,10 @@ class Toy(ABC):
 class StuffedAnimal(ABC):
     """
     StuffedAnimal defines the interface that the ItemFactory is
-    responsible to create.
+    responsible to create
     """
 
-    stuffing_options = ['polyester', 'fiberfill', 'woll']
+    stuffing_options = ['polyester fiberfill', 'woo']
     size_options = ['small', 'medium', 'large']
     fabric_options = ['linen', 'cotton', 'acrylic']
 
@@ -128,38 +129,112 @@ class RobotBunny(Toy):
 
 class DancingSkeleton(StuffedAnimal):
     """
-    #todo
+    DancingSkeleton is a type of Stuffed Animal that made of Acrylic
+    yarn and is stuffed with polyester fiberfill it also glows as an
+    additional field.
     """
+    def __init__(self, has_glow, **kwargs):
+        """
+        Initialize a Dancing Skeleton
+        :param has_glow: a boolean, to determine if the Stuffed Animal
+        glows or not
+        :param kwargs: Any additional keyword attributes for base class.
+        #todo add more comments later
+        """
+        super().__init__(**kwargs)
+        self.has_glow = has_glow
 
 
 class Reindeer(StuffedAnimal):
     """
-    #todo
+    Reindeer is a stuffed animal that is made of cotton and stuffed with
+    wool, it also glows as an additional field.
     """
+
+    def __init__(self, has_glow, **kwargs):
+        """
+        Initialize a Reindeer
+        :param has_glow: a boolean, to determine if the Stuffed Animal
+        glows or not
+        :param kwargs: Any additional keyword attributes for base class.
+        #todo add more comments later
+        """
+        super().__init__(**kwargs)
+        self.has_glow = has_glow
 
 
 class EasterBunny(StuffedAnimal):
     """
-    #todo
+    EasterBunny is a stuffed animal that is made of linen and stuffed
+    with polyester fiberfill. It also comes in various colours as an
+    additional field (White, Grey, Pink, Blue or None).
     """
+
+    colour_options = ['white', 'grey', 'pink', 'blue']
+
+    def __init__(self, colour, **kwargs):
+        """
+        Initialize an EasterBunny
+        :param colour: a string, a specified color that is white, grey,
+        pink, blue or nothing else
+        :param kwargs: Any additional keyword attributes for base class.
+        #todo add more comments later
+        """
+        super().__init__(**kwargs)
+        self.colour = colour
 
 
 class PumpkinCaramelToffee(Candy):
     """
-    #todo
+    Pumpkin caramel toffee is a candy that is not lactose free and may
+    contain traces of nuts. It comes in two varieties, sea salt or
+    regular.
     """
+
+    def __init__(self, variety, **kwargs):
+        """
+        Initialize a Pumpkin caramel toffee
+        :param variety: a string, the variety of the candy that is
+        either in sea salt or regular
+        :param kwargs: Any additional keyword attributes for base class.
+        #todo add more comments later
+        """
+        super().__init__(**kwargs)
+        self.variety = variety
 
 
 class CandyCane(Candy):
     """
-    #todo
+    Candy cane is a candy that is lactose free and contain no nuts.
     """
+
+    def __init__(self, stripes, **kwargs):
+        """
+        Initialize a Candy Cane
+        :param stripes: a string, the colour of the stripes
+        :param kwargs: Any additional keyword attributes for base class.
+        #todo add more comments later
+        """
+        super().__init__(**kwargs)
+        self.stripes = stripes
 
 
 class CremeEgg(Candy):
     """
-    #todo
+    Creme egg is a candy that is not lactose free and may contain traces
+    of nuts
     """
+
+    def __init__(self, pack_size, **kwargs):
+        """
+        Initialize a creme egg
+        :param pack_size: a string, the variety of the candy that is
+        either in sea salt or regular
+        :param kwargs: Any additional keyword attributes for base class.
+        #todo add more comments later
+        """
+        super().__init__(**kwargs)
+        self.variety = pack_size
 
 
 class ChristmasItemFactory(ABC):
