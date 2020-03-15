@@ -3,13 +3,137 @@ Maintains the store inventory.
 
 Manages Toys, Stuffed Animals, and Candy objects.
 """
-from abc import ABC
+from abc import ABC, abstractmethod
+
 
 class ItemFactory(ABC):
     """
-    #todo
+    The base factory class. #todo add more comments
     """
-    pass
+
+    @abstractmethod
+    def create_toy(self):
+        """
+        #todo
+        :return: a Toy
+        """
+        pass
+
+    @abstractmethod
+    def create_stuffed_animal(self):
+        """
+        #todo
+        :return: a StuffedAnimal
+        """
+        pass
+
+    @abstractmethod
+    def create_candy(self):
+        """
+        #todo
+        :return: a Candy
+        """
+        pass
+
+
+class ChristmasItemFactory(ItemFactory):
+    """
+    This factory class implements the ItemFactory Interface. It
+    returns a product family consisting of #todo
+    """
+
+    def create_toy(self, **kwargs):
+        """
+        Create a toy
+        :return: a Toy
+        """
+        toy = SantasWorkShop(**kwargs)
+        return toy
+
+    def create_stuffed_animal(self, **kwargs):
+        """
+        #todo
+        :return:
+        """
+
+        stuffed_animal = Reindeer(**kwargs)
+        return stuffed_animal
+
+    def create_candy(self, **kwargs):
+        """
+        #todo
+        :return:
+        """
+
+        candy = CandyCane(**kwargs)
+        return candy
+
+
+class HalloweenItemFactory(ItemFactory):
+    """
+    This factory class implements the ItemFactory Interface. It
+    returns a product family consisting of #todo
+    """
+
+    def create_toy(self, **kwargs):
+        """
+        Create a toy
+        :return: a Toy
+        """
+        toy = RCSpider(**kwargs)
+        return toy
+
+    def create_stuffed_animal(self, **kwargs):
+        """
+        #todo
+        :return:
+        """
+
+        stuffed_animal = DancingSkeleton(**kwargs)
+        return stuffed_animal
+
+    def create_candy(self, **kwargs):
+        """
+        #todo
+        :return:
+        """
+
+        candy = PumpkinCaramelToffee(**kwargs)
+        return candy
+
+
+class EasterItemFactory(ItemFactory):
+    """
+    This factory class implements the ItemFactory Interface. It
+    returns a product family consisting of #todo
+    """
+
+    def create_toy(self, **kwargs):
+        """
+        Create a toy
+        :return: a Toy
+        """
+        toy = RobotBunny(**kwargs)
+        return toy
+
+    def create_stuffed_animal(self, **kwargs):
+        """
+        #todo
+        :return:
+        """
+
+        stuffed_animal = EasterBunny(**kwargs)
+        return stuffed_animal
+
+    def create_candy(self, **kwargs):
+        """
+        #todo
+        :return:
+        """
+
+        candy = CremeEgg(**kwargs)
+        return candy
+
 
 class Toy(ABC):
     """
@@ -29,6 +153,7 @@ class Toy(ABC):
         self.product_id = product_id
 
     pass
+
 
 class StuffedAnimal(ABC):
     """
@@ -235,19 +360,4 @@ class CremeEgg(Candy):
         """
         super().__init__(**kwargs)
         self.variety = pack_size
-
-
-class ChristmasItemFactory(ABC):
-    """
-    This factory class implements the ItemFactory Interface. It
-    returns a product family consisting of #todo
-    """
-
-    def create_toy(self):
-        """
-
-        :return:
-        """
-        toy = SantasWorkShop()
-        return toy
 
