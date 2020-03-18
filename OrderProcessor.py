@@ -49,13 +49,12 @@ class OrderProcessor:
                                                 'stuffing',
                                                 'size',
                                                 'fabric'])
-
         except FileNotFoundError as e:
-            print(e)
             print("Unable to find file specified.")
         else:
-            self.order_file = temp_order.fillna('NaN', inplace=True)
+            temp_order.fillna('NaN', inplace=True)
             # Replaces None values (nan) with string.
+            self.order_file = temp_order
         finally:
             print("Finishing reading of file.")
 
