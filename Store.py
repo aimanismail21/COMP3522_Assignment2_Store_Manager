@@ -14,7 +14,6 @@ import datetime
 # In the event the store receives an order for an item that it does not have inventory for,
 # then it should go ahead and get a 100 of those items made by the corresponding factory class.
 
-
 class Store:
     def __init__(self):
         # inventory of items

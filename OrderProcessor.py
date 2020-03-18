@@ -95,12 +95,11 @@ class Order:
         self.name = name
         self.product_details = {key: value for key, value
                                 in kwargs.items() if value != 'NaN'}
-        # Removes NaN K:V pairs from product details
+
 
     def __repr__(self):
-        return f"Order#: {self.order_number}\n" \
-               f"Factory: {self.factory}\n" \
-               f"ProductID: {self.product_id}\n" \
-               f"Item Type: {self.item}\n" \
-               f"Item Name: {self.name}\n" \
-               f"Product Details: {self.product_details}"
+        return f"Order {self.order_number}, " \
+               f"Item {self.item}, " \
+               f"Product ID {self.product_id}, " \
+               f"Name \"{self.name}\", " \
+               f"Quantity {self.product_details['quantity']}"
