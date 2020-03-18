@@ -1,6 +1,9 @@
 """
 Contains all the classes and logic related to orders, reading order files.
 """
+import pandas as pd
+from Inventory import ChristmasItemFactory, EasterItemFactory, HalloweenItemFactory
+
 
 class OrderProcessor:
     """
@@ -9,11 +12,57 @@ class OrderProcessor:
 
     Factory Object?
     """
-    def __init__(self):
-        pass
 
-    def read_order(self):
-        pass
+    def __init__(self):
+        self.file_name = None
+        self.order_file = None
+        self.orders = []
+
+    def file_name_request(self):
+        self.file_name = input("What is the name of the input file?\n>>>")
+
+    def read_order_file(self):
+        path = f"./resources/{self.file_name}"
+        try:
+            temp_order = pd.read_excel(path,
+                                       columns=['order_number',
+                                                'holiday',
+                                                'item',
+                                                'name',
+                                                'product_id',
+                                                'quantity',
+                                                'description',
+                                                'has_batteries',
+                                                'min_age',
+                                                'dimensions',
+                                                'num_rooms',
+                                                'speed',
+                                                'jump_height',
+                                                'has_glow',
+                                                'spider_type',
+                                                'num_sound',
+                                                'colour',
+                                                'has_lactose',
+                                                'has_nuts',
+                                                'variety',
+                                                'pack_size',
+                                                'stuffing',
+                                                'size',
+                                                'fabric'])
+
+        except FileNotFoundError as e:
+            print(e)
+            print("Unable to find file specified.")
+        else:
+            self.order_file = temp_order.fillna('NaN', inplace=True)  #
+            # Replaces None values (nan) with string.
+        finally:
+            print("Finishing reading of file.")
+
+    def create_order_from_order_file(self):
+        for row in self.order_file.iterrows():
+            order = Order(**row[1])
+            yield order
 
 
 class Order:
@@ -22,25 +71,31 @@ class Order:
     a variety of items with appropriate business attributes
     like order number, product ids.
     """
-#  todo Add functionality
-# •	Order number
-# •	Product ID
-# •	Item - The type of item (Toy, StuffedAnimal and Candy).
-# •	Name of the item
-# •	A dictionary of product details. These details are the rest of the attributes of the item as specified in the excel sheet EXCEPT the name of the holiday — Easter, Christmas or Halloween.
-# •	The order should also contain a reference to the appropriate Factory object that can create this item.
+    #  todo test that mapping works
+    holiday_factory_mapping = {
+        'Christmas': ChristmasItemFactory,
+        'Easter': EasterItemFactory,
+        'Halloween': HalloweenItemFactory
+    }
+    """
+    Holiday Factory Mapping is a dictionary to map a holiday to its
+    appropriate factory class.
+    """
+    def __init__(self, order_number, holiday, product_id, item,
+                 name, **kwargs):
+        self.order_number = order_number
+        self.factory = Order.holiday_factory_mapping[holiday]
+        self.product_id = product_id
+        self.item = item
+        self.name = name
+        self.product_details = {key: value for key, value
+                                in kwargs.items() if value != 'NaN'}
+        # Removes NaN K:V pairs from product details
 
-# todo 9 factories to map and the mapping should return an instantiated
-#  concrete factory
-factory_mapping = {
-    1: "Create a factory for a specific type of item",
-    2: "2",
-    3: "3",
-    4: "",
-    5: "",
-    6: "",
-    7: "",
-    8: "",
-    9: ""
-
-}
+    def __repr__(self):
+        return f"Order#: {self.order_number}\n" \
+               f"Factory: {self.factory}\n" \
+               f"ProductID: {self.product_id}\n" \
+               f"Item Type: {self.item}\n" \
+               f"Item Name: {self.name}\n" \
+               f"Product Details: {self.product_details}"
