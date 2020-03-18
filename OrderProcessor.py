@@ -83,6 +83,11 @@ class Order:
     """
     def __init__(self, order_number, holiday, product_id, item,
                  name, **kwargs):
+        # todo error handling for incorrect values
+        # 1. product_id (first letter should be first letter of holiday
+        # followed by 4 digits and first letter of item type
+        # Ex. Christmas Stuffed Animal -> C1234S
+        # Could be more things to error check
         self.order_number = order_number
         self.factory = Order.holiday_factory_mapping[holiday]
         self.product_id = product_id
