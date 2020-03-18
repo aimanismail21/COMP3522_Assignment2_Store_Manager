@@ -54,7 +54,7 @@ class OrderProcessor:
             print(e)
             print("Unable to find file specified.")
         else:
-            self.order_file = temp_order.fillna('NaN', inplace=True)  #
+            self.order_file = temp_order.fillna('NaN', inplace=True)
             # Replaces None values (nan) with string.
         finally:
             print("Finishing reading of file.")
@@ -63,6 +63,7 @@ class OrderProcessor:
         for row in self.order_file.iterrows():
             order = Order(**row[1])
             yield order
+
 
 
 class Order:
