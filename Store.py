@@ -48,8 +48,3 @@ class Store:
             for order in self.order_records:
                 file_output.write(order)
 
-if __name__ == '__main__':
-    store = Store()
-    store.daily_transaction_report()
-
-
