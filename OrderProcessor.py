@@ -64,7 +64,6 @@ class OrderProcessor:
             yield order
 
 
-
 class Order:
     """
     An Order is an analogy for an business transaction that orders

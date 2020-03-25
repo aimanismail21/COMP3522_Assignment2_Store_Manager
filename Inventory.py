@@ -6,15 +6,32 @@ Manages Toys, Stuffed Animals, and Candy objects.
 from abc import ABC, abstractmethod
 
 
+class InvalidDataError(Exception):
+    """
+    An invalid data error is an error that is raised when a constructor
+    is initialized with invalid arguments that do not match the class
+    requirements.
+    """
+
+    def __init__(self, error_message):
+        """
+        Initialize an InvalidDataError.
+        :param error_message: a str, the message that contains the error
+        which raised InvalidDataError
+        """
+        super().__init__(f"InvalidDataError - {error_message}")
+        self.missing_word = error_message
+
+
 class ItemFactory(ABC):
     """
-    The base factory class. #todo add more comments
+    The base factory class which creates a Toy, StuffedAnimal and Candy.
     """
 
     @abstractmethod
     def create_toy(self):
         """
-        #todo
+        Create a toy
         :return: a Toy
         """
         pass
@@ -22,7 +39,7 @@ class ItemFactory(ABC):
     @abstractmethod
     def create_stuffed_animal(self):
         """
-        #todo
+        Create a stuffed animal
         :return: a StuffedAnimal
         """
         pass
@@ -30,7 +47,7 @@ class ItemFactory(ABC):
     @abstractmethod
     def create_candy(self):
         """
-        #todo
+        Create a Candy
         :return: a Candy
         """
         pass
@@ -39,7 +56,9 @@ class ItemFactory(ABC):
 class ChristmasItemFactory(ItemFactory):
     """
     This factory class implements the ItemFactory Interface. It
-    returns a product family consisting of #todo
+    returns a product family consisting of SantasWorkShop, Reindeer,
+    and Candy respectively as subclasses to the Toy, StuffedAnimal
+    and Candy class.
     """
 
     def create_toy(self, **kwargs):
@@ -52,8 +71,8 @@ class ChristmasItemFactory(ItemFactory):
 
     def create_stuffed_animal(self, **kwargs):
         """
-        #todo
-        :return:
+        Create a stuffed animal
+        :return: a StuffedAnimal
         """
 
         stuffed_animal = Reindeer(**kwargs)
@@ -61,8 +80,8 @@ class ChristmasItemFactory(ItemFactory):
 
     def create_candy(self, **kwargs):
         """
-        #todo
-        :return:
+        Create a Candy
+        :return: a Candy
         """
 
         candy = CandyCane(**kwargs)
@@ -72,7 +91,9 @@ class ChristmasItemFactory(ItemFactory):
 class HalloweenItemFactory(ItemFactory):
     """
     This factory class implements the ItemFactory Interface. It
-    returns a product family consisting of #todo
+    returns a product family consisting of RCSpider, DancingSkeleton
+    and PumpkinCaramelToffee respectively as subclasses to the Toy,
+    StuffedAnimal and Candy class.
     """
 
     def create_toy(self, **kwargs):
@@ -85,8 +106,8 @@ class HalloweenItemFactory(ItemFactory):
 
     def create_stuffed_animal(self, **kwargs):
         """
-        #todo
-        :return:
+        Create a stuffed animal
+        :return: a StuffedAnimal
         """
 
         stuffed_animal = DancingSkeleton(**kwargs)
@@ -94,8 +115,8 @@ class HalloweenItemFactory(ItemFactory):
 
     def create_candy(self, **kwargs):
         """
-        #todo
-        :return:
+        Create a Candy
+        :return: a Candy
         """
 
         candy = PumpkinCaramelToffee(**kwargs)
@@ -105,7 +126,9 @@ class HalloweenItemFactory(ItemFactory):
 class EasterItemFactory(ItemFactory):
     """
     This factory class implements the ItemFactory Interface. It
-    returns a product family consisting of #todo
+    returns a product family consisting of RobotBunny, EasterBunny,
+    CremeEgg respectively as subclasses to the Toy, StuffedAnimal
+    and Candy class.
     """
 
     def create_toy(self, **kwargs):
@@ -118,8 +141,8 @@ class EasterItemFactory(ItemFactory):
 
     def create_stuffed_animal(self, **kwargs):
         """
-        #todo
-        :return:
+        Create a stuffed animal
+        :return: a StuffedAnimal
         """
 
         stuffed_animal = EasterBunny(**kwargs)
@@ -127,8 +150,8 @@ class EasterItemFactory(ItemFactory):
 
     def create_candy(self, **kwargs):
         """
-        #todo
-        :return:
+        Create a Candy
+        :return: a Candy
         """
 
         candy = CremeEgg(**kwargs)
@@ -189,7 +212,6 @@ class Candy(ABC):
         self.name = name
         self.description = description
         self.product_id = product_id
-    pass
 
 
 class SantasWorkShop(Toy):
@@ -202,10 +224,16 @@ class SantasWorkShop(Toy):
         Initialize a SantasWorkShop
         :param dimensions: a tuple #todo
         :param num_rooms: an int, the number of rooms
-        :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :param kwargs: Any additional keyword attributes for base class
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
+        #todo
+        #dimenions error handling
+        if type(num_rooms) != int:
+            raise InvalidDataError("SantasWorkshop: Number of rooms is not an"
+                                   "integer value")
         self._dimensions = dimensions
         self._num_rooms = num_rooms
 
@@ -219,15 +247,28 @@ class RCSpider(Toy):
     def __init__(self, speed, jump_height, has_glow, spider_type, **kwargs):
         """
         Initialize a RCSpider
-        :param speed: an int, specified speed of RCSpider
+        :param speed: an int, specified speed of RCSpider units in m/s
         :param jump_height: an int, specified jump height of RCSpider
         :param has_glow: a boolean, if the RCSpider glows or not
         :param spider_type: a string, either a Tarantula or a
         WolfSpider type otherwise nothing else
-        :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :param kwargs: Any additional keyword attributes for base class
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
+        fastest_toy_speed = 1.6
+        rc_spider_types = ['tarantula', 'wolf spider']
         super().__init__(**kwargs)
+        if type(speed) != int:
+            raise InvalidDataError("RCSpider: Must be given an integer")
+
+        if speed >= fastest_toy_speed:
+            raise InvalidDataError(f"RCSpider: Capped speed is"
+                                   f"{fastest_toy_speed} meters/seconds")
+
+        if not spider_type or spider_type.lower() not in rc_spider_types:
+            raise InvalidDataError(f"RCSpider: spider type is either "
+                                   f"{rc_spider_types} or nothing else")
         self.speed = speed
         self.jump_height = jump_height
         self.has_glow = has_glow
@@ -244,10 +285,20 @@ class RobotBunny(Toy):
         Initialize a RobotBunny
         :param num_sound: an int, the number of sound effects
         :param colour: a string, specified colour of RobotBunny
-        :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :param kwargs: Any additional keyword attributes for base class
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
+        robot_bunny_colours = ['orange', 'blue', 'pink']
+        if type(num_sound) != int:
+            raise InvalidDataError(f"RobotBunny: number of sound effect "
+                                   f"must be an integer")
+
+        if not colour or colour.lower() not in robot_bunny_colours:
+            raise InvalidDataError("RobotBunny: Color has either be"
+                                   "orange, blue, pink or nothing else")
+
         self.num_sound = num_sound
         self.colour = colour
 
@@ -264,7 +315,8 @@ class DancingSkeleton(StuffedAnimal):
         :param has_glow: a boolean, to determine if the Stuffed Animal
         glows or not
         :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
         self.has_glow = has_glow
@@ -295,7 +347,7 @@ class EasterBunny(StuffedAnimal):
     additional field (White, Grey, Pink, Blue or None).
     """
 
-    colour_options = ['white', 'grey', 'pink', 'blue']
+
 
     def __init__(self, colour, **kwargs):
         """
@@ -307,6 +359,7 @@ class EasterBunny(StuffedAnimal):
         """
         super().__init__(**kwargs)
         self.colour = colour
+        colour_options = ['white', 'grey', 'pink', 'blue']
 
 
 class PumpkinCaramelToffee(Candy):
