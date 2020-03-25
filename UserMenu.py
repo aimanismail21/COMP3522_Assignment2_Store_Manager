@@ -1,5 +1,9 @@
 """
-todo docstring
+User Menu contains the logic to allow a user to do the following:
+1. Process Web Orders
+2. Check Inventory
+
+This is likely the client
 """
 import traceback
 import Inventory
@@ -9,10 +13,7 @@ from OrderProcessor import OrderProcessor, Order
 
 class UserMenu:
     """
-    User Menu contains the logic to allow a user to do the following:
-    1. Process Web Orders
-    2. Check Inventory
-    3. Exit the program with a daily transaction report.
+
     """
 
     @staticmethod
@@ -20,8 +21,11 @@ class UserMenu:
         new_order_processing = OrderProcessor()
         new_order_processing.file_name_request()
         new_order_processing.read_order_file()
-        print("Attempting to create orders")
-        new_order_processing.create_order_from_order_file()
+        print(new_order_processing.create_order_from_order_file())
+        for order in new_order_processing.create_order_from_order_file():
+            # store receives the order and appends to its record
+
+
 
     def __init__(self):
         self.user_menu_map = {
@@ -33,11 +37,8 @@ class UserMenu:
 
     def prompt_menu(self):
         """
-        Prompts the user for input to access the three available options.
-        1. Process Web Orders
-        2. Check Inventory
-        3. Exit the Program with a Transaction Report
-        :return: None
+
+        :return:
         """
         invalid_selection = True
         while invalid_selection:
@@ -45,8 +46,7 @@ class UserMenu:
                 "Welcome!\nSelect option by inputting a digit.\n"
                 "1: Process Web Orders\n"
                 "2. Check Inventory\n"
-                "3. Exit Program\n"
-                ">>>")
+                "3. Exit Program\n")
             try:
                 menu_option_selected = self.user_menu_map[option]
             except (KeyError, ValueError) as e:
@@ -54,16 +54,12 @@ class UserMenu:
                 print("Invalid Selection")
             else:
                 menu_option = menu_option_selected()
-                invalid_selection == False
-                if option == "3":
-                    pass
-                    #add transaction report
-                #todo invalid_selection flag to false on 3 selection
+                invalid_selection = False
 
 
 def main():
     um = UserMenu()
-    um.prompt_menu()
+    um.menu_order_processing()
 
 if __name__ == '__main__':
     main()

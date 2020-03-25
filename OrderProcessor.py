@@ -16,7 +16,6 @@ class OrderProcessor:
     def __init__(self):
         self.file_name = None
         self.order_file = None
-        self.orders = []
 
     def file_name_request(self):
         self.file_name = input("What is the name of the input file?\n>>>")
@@ -63,9 +62,7 @@ class OrderProcessor:
         print("Creating Orders from Order File")
         for row in self.order_file.iterrows():
             order = Order(**row[1])
-            yield order  # todo yield object to inventory for instantiation
-            # and error checking
-
+            yield order
 
 
 class Order:
