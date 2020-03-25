@@ -181,7 +181,7 @@ class Toy(ABC):
 class StuffedAnimal(ABC):
     """
     StuffedAnimal defines the interface that the ItemFactory is
-    responsible to create
+    responsible to create.
     """
 
     stuffing_options = ['polyester fiberfill', 'woo']
@@ -203,7 +203,8 @@ class StuffedAnimal(ABC):
 
 class Candy(ABC):
     """
-    #todo
+    Candy defines the interface that the ItemFactory is responsible to
+    create.
     """
 
     def __init__(self, has_nuts, has_lactose, name, description, product_id):
@@ -229,8 +230,14 @@ class SantasWorkShop(Toy):
         invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
-        #todo
-        #dimenions error handling
+
+        if len(dimensions) != 2:
+            raise InvalidDataError("SantasWorkshop: Number of rooms"
+                                   "is not in length by width")
+        for dimension in dimensions:
+            if type(dimension) != int:
+                raise InvalidDataError("SantasWorkshop: Number of rooms"
+                                       "is not an integer")
         if type(num_rooms) != int:
             raise InvalidDataError("SantasWorkshop: Number of rooms is not an"
                                    "integer value")
@@ -334,7 +341,6 @@ class Reindeer(StuffedAnimal):
         :param has_glow: a boolean, to determine if the Stuffed Animal
         glows or not
         :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
         """
         super().__init__(**kwargs)
         self.has_glow = has_glow
@@ -347,19 +353,24 @@ class EasterBunny(StuffedAnimal):
     additional field (White, Grey, Pink, Blue or None).
     """
 
-
-
     def __init__(self, colour, **kwargs):
         """
         Initialize an EasterBunny
         :param colour: a string, a specified color that is white, grey,
         pink, blue or nothing else
         :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
-        self.colour = colour
+
         colour_options = ['white', 'grey', 'pink', 'blue']
+
+        if not colour or colour.lower() not in colour_options:
+            raise InvalidDataError("EasterBunny: Color has either be"
+                                   "orange, blue, pink or nothing else")
+
+        self.colour = colour
 
 
 class PumpkinCaramelToffee(Candy):
@@ -375,9 +386,14 @@ class PumpkinCaramelToffee(Candy):
         :param variety: a string, the variety of the candy that is
         either in sea salt or regular
         :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
+
+        if not variety or variety.lower() not in variety:
+            raise InvalidDataError("EasterBunny: Color has either be"
+                                   "orange, blue, pink or nothing else")
         self.variety = variety
 
 
@@ -391,9 +407,17 @@ class CandyCane(Candy):
         Initialize a Candy Cane
         :param stripes: a string, the colour of the stripes
         :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
+
+        stripe_options = ['red', 'green']
+
+        if not stripes or stripes.lower() not in stripe_options:
+            raise InvalidDataError("CandyCane: Stripe has either be"
+                                   "red or green")
+
         self.stripes = stripes
 
 
@@ -409,8 +433,14 @@ class CremeEgg(Candy):
         :param pack_size: a string, the variety of the candy that is
         either in sea salt or regular
         :param kwargs: Any additional keyword attributes for base class.
-        #todo add more comments later
+        :raises: InvalidDataError, when an attribute is assigned an
+        invalid data type or given data that does not meet requirements
         """
         super().__init__(**kwargs)
-        self.variety = pack_size
+
+        if type(pack_size) != int:
+            raise InvalidDataError("CremeEgg: Must be an integer for"
+                                   "pack size")
+
+        self.pack_size = pack_size
 
