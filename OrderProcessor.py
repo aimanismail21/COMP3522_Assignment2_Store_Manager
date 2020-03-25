@@ -16,7 +16,6 @@ class OrderProcessor:
     def __init__(self):
         self.file_name = None
         self.order_file = None
-        self.orders = []
 
     def file_name_request(self):
         self.file_name = input("What is the name of the input file?\n>>>")
@@ -52,6 +51,7 @@ class OrderProcessor:
         except FileNotFoundError as e:
             print("Unable to find file specified.")
         else:
+            print("Valid File Accepted")
             temp_order.fillna('NaN', inplace=True)
             # Replaces None values (nan) with string.
             self.order_file = temp_order
@@ -59,6 +59,7 @@ class OrderProcessor:
             print("Finishing reading of file.")
 
     def create_order_from_order_file(self):
+        print("Creating Orders from Order File")
         for row in self.order_file.iterrows():
             order = Order(**row[1])
             yield order
@@ -88,12 +89,12 @@ class Order:
         # Ex. Christmas Stuffed Animal -> C1234S
         # Could be more things to error check
         self.order_number = order_number
-        self.factory = Order.holiday_factory_mapping[holiday]
         self.product_id = product_id
         self.item = item
         self.name = name
         self.product_details = {key: value for key, value
                                 in kwargs.items() if value != 'NaN'}
+        self.factory = Order.holiday_factory_mapping[holiday]
 
 
     def __repr__(self):

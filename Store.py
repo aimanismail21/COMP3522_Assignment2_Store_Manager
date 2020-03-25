@@ -6,7 +6,7 @@ Store contains the methods and classes responsible for:
 
 """
 import datetime
-
+from OrderProcessor import Order
 
 # todo Special Requirements
 # The first time the store receives an order for an item, it is likely that it won't
@@ -14,13 +14,13 @@ import datetime
 # In the event the store receives an order for an item that it does not have inventory for,
 # then it should go ahead and get a 100 of those items made by the corresponding factory class.
 
+
 class Store:
     def __init__(self):
         # inventory of items
         self.order_records = ["fake data", "fakedate"]
-        pass
 
-    def read_order(self):
+    def read_order(self, order: Order):
         pass
 
     def order_items(self, item_factory):

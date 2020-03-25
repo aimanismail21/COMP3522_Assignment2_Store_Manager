@@ -5,6 +5,12 @@ Manages Toys, Stuffed Animals, and Candy objects.
 """
 from abc import ABC, abstractmethod
 
+#todo concrete item classes should raises errors if properties are invalid
+# or missing
+
+# todo errors raised in concrete item classes must be caught in higher level
+#  modules (item factories) where the error will result in the order being
+#  invalidated with the proper reason why the error occured.
 
 class InvalidDataError(Exception):
     """

@@ -21,9 +21,11 @@ class UserMenu:
         new_order_processing = OrderProcessor()
         new_order_processing.file_name_request()
         new_order_processing.read_order_file()
+        print(new_order_processing.create_order_from_order_file())
         for order in new_order_processing.create_order_from_order_file():
-            new_order_processing.orders.append(order)
-            print(order)
+            # store receives the order and appends to its record
+
+
 
     def __init__(self):
         self.user_menu_map = {
