@@ -1,10 +1,10 @@
 """
 Contains all the classes and logic related to orders, reading order files.
 """
-import enum
-
 import pandas as pd
-from Inventory import ChristmasItemFactory, EasterItemFactory, HalloweenItemFactory
+
+from Inventory import ChristmasItemFactory, EasterItemFactory, \
+    HalloweenItemFactory
 
 
 class OrderProcessor:

@@ -4,7 +4,6 @@ with store
 """
 
 from Store import Store
-from OrderProcessor import OrderProcessor, Order
 
 
 class UserMenu:

@@ -46,12 +46,13 @@ class Store:
             invalid_data_reasons.append("Invalid Item for Order")
         if not valid_order:
             self.order_records[
-                self._counter_of_records] = f"Order {self._counter_of_records}, " \
-                                            f"Could not " \
-                                            f"process order as" \
-                                            f" data was corrupted," \
-                                            f" InvalidDataError -" \
-                                            f" {invalid_data_reasons}"
+                self._counter_of_records] = \
+                f"Order {self._counter_of_records}, " \
+                f"Could not " \
+                f"process order as" \
+                f" data was corrupted," \
+                f" InvalidDataError -" \
+                f" {invalid_data_reasons}"
             self._counter_of_records += 1
             return False
         else:
