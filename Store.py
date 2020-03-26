@@ -1,6 +1,6 @@
 """
 Store contains the methods and classes responsible for:
-1. Receiving orders and maintainingits inventory
+1. Receiving orders and maintaining its inventory
 2. Getting items from a factory class if the store does not have enough stock.
 3. Creating Daily Transaction Report
 """
