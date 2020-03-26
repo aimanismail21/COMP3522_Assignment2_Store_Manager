@@ -83,6 +83,7 @@ class Store:
                     yield candy
 
         except Exception as e:
+            print(f"Error in Order {order.order_number}")
             self.order_records[
                 order.order_number] = f"Order {order.order_number}, " \
                                       f"Could not " \
@@ -92,7 +93,7 @@ class Store:
                                       f" {e}"
 
         else:
-            print(f"Successfully processed order {order.order_number}")
+            print(f"Successfully processed Order {order.order_number}")
 
     def daily_transaction_report(self):
         """
