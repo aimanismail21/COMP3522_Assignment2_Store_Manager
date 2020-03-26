@@ -35,6 +35,7 @@ Application will run and provide an interface that allows you to
 3. Creating Daily Transaction Report
 
 You must pass in an excel file to process your orders and inventory.
+The excel file must be within the resources directory.
 
 Ensure you have an excel file that contains the exact columns and matched names otherwise errors may occur.
 
