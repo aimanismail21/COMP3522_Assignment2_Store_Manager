@@ -29,7 +29,6 @@ class Store:
         :param order: Order object
         :return: bool, True if valid
         """
-        print(f"Processing Order {order.order_number}")
         valid_order = True
         invalid_data_reasons = []
         if order.order_number in self.order_records:
@@ -108,7 +107,8 @@ class Store:
             file_output.write(datetime.datetime.strftime(
                 today,
                 "%d-%m-%Y %H:%M\n\n"))
-            for order in self.order_records:
+            for order in self.order_records.values():
+                print(order)
                 file_output.write(order)
 
     def process_order(self, product_id, quantity_requested, product_name) -> \
@@ -149,13 +149,17 @@ class Store:
                 stock_level = "OUT OF STOCK"
             if product_line_ledger['quantity'] < 3:
                 stock_level = "VERY LOW"
-            if product_line_ledger['quantiy'] < 10:
+            if product_line_ledger['quantity'] < 10:
                 stock_level = "LOW"
             print(f"Product: {product_line_ledger['name']}, Quantity: "
                   f"{product_line_ledger['quantity']},"
                   f" Stock Status: {stock_level}")
 
     def menu_order_processing(self):
+        """
+        Uses OrderProcessor to read and process and order file.
+        :return: None
+        """
         new_order_processing = OrderProcessor()
         new_order_processing.file_name_request()
         new_order_processing.read_order_file()
