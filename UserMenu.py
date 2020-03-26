@@ -26,8 +26,12 @@ class UserMenu:
             # store receives the order and appends to its record
             valid = store.validate_order(order)
             if valid:
-                store.process_order(order)
-
+                unfufilled_quantity = store.process_order(order.product_id,
+                                                          order.product_details['quantity'])
+                for item in store.create_items(order, unfufilled_quantity):
+                    product_ledger = store.inventory[order.product_id]
+                    product_ledger['quantity'] += 1
+                    product_ledger['item'].append(item)
 
     def __init__(self):
         self.user_menu_map = {
