@@ -20,6 +20,7 @@ class Store:
         self.inventory = {} # {productID: {'quantity': int, 'item': []}}
         self._number_of_items_to_create = 100
 
+
     def validate_order(self, order) -> bool:
         print(f"Processing Order {order.order_number}")
         valid_order = True
@@ -86,9 +87,12 @@ class Store:
             for order in self.order_records:
                 file_output.write(order)
 
-    def process_order(self, product_id, quantity_requested) -> int:
+    def process_order(self, product_id, quantity_requested, product_name) -> \
+            int:
         if product_id not in self.inventory.keys():
-            self.inventory[product_id] = {'quantity': 0, 'item': []}
+            self.inventory[product_id] = {'quantity': 0,
+                                          'item': [],
+                                          'name': product_name}
             return quantity_requested
         else:
             product_ledger = self.inventory[product_id]
@@ -100,5 +104,17 @@ class Store:
                 product_ledger['quantity'] = 0
                 return unfulfilled_orders
 
+    def check_inventory(self):
+        for product_line_ledger in self.inventory.values():
+            stock_level = "IN STOCK"
+            if product_line_ledger['quantity'] == 0:
+                stock_level = "OUT OF STOCK"
+            if product_line_ledger['quantity'] < 3:
+                stock_level = "VERY LOW"
+            if product_line_ledger['quantiy'] < 10:
+                stock_level = "LOW"
+            print(f"Product: {product_line_ledger['name']}, Quantity: "
+                  f"{product_line_ledger['quantity']},"
+                  f" Stock Status: {stock_level}")
 
 
