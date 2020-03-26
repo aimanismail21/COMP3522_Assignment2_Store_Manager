@@ -93,27 +93,25 @@ class Order:
 
         self.product_details['product_id'] = product_id
 
-        product_detail_has_keyword = ['has_batteries', 'has_glow',
-                                      'has_nuts', 'has_lactose']
+        product_detail_has_keyword = ['has_batteries', 'has_glow', 'has_nuts',
+                                      'has_lactose']
+
         for product_detail_key in self.product_details.keys():
 
             if product_detail_key.lower() in product_detail_has_keyword:
 
                 if self.product_details[product_detail_key].lower() == 'y':
                     self.product_details[product_detail_key] = True
-                    break
 
-                if self.product_details[product_detail_key].lower() == 'n':
-                    self.product_details[product_detail_key] = False
-                    break
+                else:
+                    if self.product_details[product_detail_key].lower() == 'n':
+                        self.product_details[product_detail_key] = False
 
         self.product_details["name"] = name
-
 
         self.factory = Order.factory_mapping[holiday]
         self.holiday = holiday
         self.quantity = quantity
-
 
     def __repr__(self):
         return f"Order {self.order_number}, " \

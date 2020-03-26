@@ -533,8 +533,8 @@ class CremeEgg(Candy):
         """
         super().__init__(**kwargs)
 
-        if type(pack_size) != int:
-            raise InvalidDataError("CremeEgg: Must be an integer for"
+        if type(pack_size) != float:
+            raise InvalidDataError("CremeEgg: Must be an float for"
                                    "pack size")
 
         self.pack_size = pack_size
