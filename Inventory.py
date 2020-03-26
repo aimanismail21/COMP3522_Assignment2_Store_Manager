@@ -316,9 +316,11 @@ class SantasWorkShop(Toy):
         """
         super().__init__(**kwargs)
 
+        #todo
         if len(dimensions) != 2:
             raise InvalidDataError("SantasWorkshop: Number of rooms"
                                    "is not in length by width")
+        #todo
         for dimension in dimensions:
             if type(dimension) != int:
                 raise InvalidDataError("SantasWorkshop: Number of rooms"
@@ -357,6 +359,12 @@ class RCSpider(Toy):
         if speed >= fastest_toy_speed:
             raise InvalidDataError(f"RCSpider: Capped speed is"
                                    f"{fastest_toy_speed} meters/seconds")
+
+        if speed < 0:
+            raise InvalidDataError(f"RCSpider: Speed is negative")
+
+        if jump_height < 0:
+            raise InvalidDataError(f"RCSpider: Jump height is negative")
 
         if not spider_type or spider_type.lower() not in rc_spider_types:
             raise InvalidDataError(f"RCSpider: spider type is either "
