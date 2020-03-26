@@ -22,6 +22,7 @@ class Store:
         self.order_records = {}
         self.inventory = {}
         self._number_of_items_to_create = 100
+        self._counter_of_records = 1
 
     def validate_order(self, order) -> bool:
         """
@@ -33,7 +34,7 @@ class Store:
         invalid_data_reasons = []
         if order.order_number in self.order_records:
             valid_order = False
-            invalid_data_reasons.append("Order # was processed previously.")
+            invalid_data_reasons.append("Order was processed previously.")
         if order.holiday[0] != order.product_id[0] or order.item[0] != \
                 order.product_id[5]:
             valid_order = False
@@ -46,15 +47,17 @@ class Store:
             invalid_data_reasons.append("Invalid Item for Order")
         if not valid_order:
             self.order_records[
-                order.order_number] = f"Order {order.order_number}, " \
-                                      f"Could not " \
-                                      f"process order as" \
-                                      f" data was corrupted," \
-                                      f" InvalidDataError -" \
-                                      f" {invalid_data_reasons}"
+                self._counter_of_records] = f"Order {self._counter_of_records}, " \
+                                            f"Could not " \
+                                            f"process order as" \
+                                            f" data was corrupted," \
+                                            f" InvalidDataError -" \
+                                            f" {invalid_data_reasons}"
+            self._counter_of_records += 1
             return False
         else:
-            self.order_records[order.order_number] = order
+            self.order_records[self._counter_of_records] = order
+            self._counter_of_records += 1
             return True
 
     def create_items(self, order, quantity):
