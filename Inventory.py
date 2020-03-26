@@ -175,10 +175,26 @@ class Toy(ABC):
         """
         Initialize a toy.
         """
+        if type(is_battery_operated) != bool:
+            raise InvalidDataError("Toy: is_battery_operated must be"
+                                   "a bool.")
         self.has_battery = is_battery_operated
+
+        if type(min_age) != int:
+            raise InvalidDataError("Toy: min_age must be"
+                                   "a bool.")
         self.min_age = min_age
+
+        if type(name) != str:
+            raise InvalidDataError("Toy: name must be a string")
         self.name = name
+
+        if type(description) != str:
+            raise InvalidDataError("Toy: description must be a string")
         self.description = description
+
+        if type(product_id) != str:
+            raise InvalidDataError("Toy: product id must be a string")
         self.product_id = product_id
 
     pass
@@ -190,20 +206,56 @@ class StuffedAnimal(ABC):
     responsible to create.
     """
 
-    stuffing_options = ['polyester fiberfill', 'woo']
-    size_options = ['small', 'medium', 'large']
-    fabric_options = ['linen', 'cotton', 'acrylic']
-
     def __init__(self, stuffing, size, fabric, name, description, product_id):
         """
         Initialize a Stuffed animal
+        :param stuffing: a str, the stuffing used
+        :param size: a str, size of the StuffedAnimal
+        :param fabric: a str, the material of fabric used
+        :param name: a str, the name of the StuffedAnimal
+        :param description: a str, a description of the StuffedAnimal
+        :param product_id: a str, the product id of the StuffedAnimal
         """
 
+        stuffing_options = ['polyester fiberfill', 'wool']
+        size_options = ['small', 'medium', 'large']
+        fabric_options = ['linen', 'cotton', 'acrylic']
+
+        if not stuffing or stuffing.lower() not in stuffing_options:
+            raise InvalidDataError("StuffedAnimal: "
+                                   "stuffing must be polyester fiberfill"
+                                   "or wool")
         self.stuffing = stuffing
+
+        if not size or size.lower() not in size_options:
+            raise InvalidDataError("StuffedAnimal: "
+                                   "size must be small medium "
+                                   "or large")
+
         self.size = size
+
+        if not fabric or fabric.lower() not in fabric_options:
+            raise InvalidDataError("StuffedAnimal: "
+                                   "Fabric must be linen, cotton or"
+                                   "acrylic")
         self.fabric = fabric
+
+        if type(name) != str:
+            raise InvalidDataError("StuffedAnimal: "
+                                   "Name must be a string")
+
         self.name = name
+
+        if type(description) != str:
+            raise InvalidDataError("StuffedAnimal: "
+                                   "Description id must be a string")
+
         self.description = description
+
+        if type(product_id) != str:
+            raise InvalidDataError("StuffedAnimal: "
+                                   "product id must be a string")
+
         self.product_id = product_id
 
 
@@ -214,10 +266,37 @@ class Candy(ABC):
     """
 
     def __init__(self, has_nuts, has_lactose, name, description, product_id):
+        """
+        Initialize a Candy.
+        :param has_nuts: a bool, if the candy contains nuts of not
+        :param has_lactose: a bool, if the candy contains lactose or not
+        :param name: a str, the name of the candy
+        :param description: a str, the description of the candy
+        :product_id: a str, the product id of the candy
+        """
+
+        if type(has_nuts) != bool:
+            raise InvalidDataError("Candy: has nuts must be a bool")
+
         self.has_nuts = has_nuts
+
+        if type(has_lactose) != bool:
+            raise InvalidDataError("Candy: has lactose must be a bool")
         self.has_lactose = has_lactose
+
+        if type(name) != str:
+            raise InvalidDataError("Candy: name must be a str")
+
         self.name = name
+
+        if type(description) != str:
+            raise InvalidDataError("Candy: Description must be a str")
+
         self.description = description
+
+        if type(product_id) != str:
+            raise InvalidDataError("Candy: product id must be a str")
+
         self.product_id = product_id
 
 
