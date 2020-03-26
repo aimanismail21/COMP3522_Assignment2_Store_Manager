@@ -27,7 +27,7 @@ class UserMenu:
             valid = store.validate_order(order)
             if valid:
                 unfufilled_quantity = store.process_order(order.product_id,
-                                                          order.product_details['quantity'])
+                                                          order.quantity)
                 for item in store.create_items(order, unfufilled_quantity):
                     product_ledger = store.inventory[order.product_id]
                     product_ledger['quantity'] += 1

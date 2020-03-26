@@ -56,19 +56,19 @@ class Store:
         :param item_factory: a factory to produce a type of item
         :return: an item
         """
-        factory = self.factory()
+        factory = order.factory()
         number_to_create = self._number_of_items_to_create - quantity
         for number_of_items_to_creates\
                 in range(0, number_to_create):
             if order.item == "Toy":
-                toy = factory.create_toy(order.product_details)
+                toy = factory.create_toy(**order.product_details)
                 yield toy
             if order.item == "StuffedAnimal":
                 stuffed_animal = factory.create_stuffed_animal(
-                    order.product_details)
+                    **order.product_details)
                 yield stuffed_animal
             if order.item == "Candy":
-                candy = factory.create_candy(order.product_details)
+                candy = factory.create_candy(**order.product_details)
                 yield candy
 
     def daily_transaction_report(self):

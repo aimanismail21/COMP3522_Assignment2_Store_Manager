@@ -83,7 +83,7 @@ class Order:
     appropriate factory class.
     """
     def __init__(self, order_number, holiday, product_id, item,
-                 name, **kwargs):
+                 name, quantity, **kwargs):
         self.order_number = order_number
         self.product_id = product_id
         self.item = item
@@ -93,6 +93,7 @@ class Order:
         self.product_details[name] = name
         self.factory = Order.factory_mapping[holiday]
         self.holiday = holiday
+        self.quantity = quantity
 
 
     def __repr__(self):
@@ -100,4 +101,4 @@ class Order:
                f"Item {self.item}, " \
                f"Product ID {self.product_id}, " \
                f"Name \"{self.name}\", " \
-               f"Quantity {self.product_details['quantity']}"
+               f"Quantity {self.quantity}"
