@@ -89,6 +89,7 @@ class Order:
         self.name = name
         self.product_details = {key: value for key, value
                                 in kwargs.items() if value != 'NaN'}
+
         self.factory = Order.holiday_factory_mapping[holiday]
         self.holiday = holiday
 
