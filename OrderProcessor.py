@@ -11,18 +11,27 @@ class OrderProcessor:
     """
     An Order Processor is an object that is responsible for reading a order
     file to create an Order object.
-
-    Factory Object?
     """
 
     def __init__(self):
+        """
+        Initialize an OrderProcessor
+        """
         self.file_name = None
         self.order_file = None
 
     def file_name_request(self):
+        """
+        Prompt user to enter file name.
+        :return: None
+        """
         self.file_name = input("What is the name of the input file?\n>>>")
 
     def read_order_file(self):
+        """
+        Read the order file.
+        :return: None
+        """
         path = f"./resources/{self.file_name}"
         try:
             temp_order = pd.read_excel(path,
@@ -66,6 +75,7 @@ class OrderProcessor:
             order = Order(**row[1])
             yield order
 
+
 class Order:
     """
     An Order is an analogy for an business transaction that orders
@@ -77,12 +87,26 @@ class Order:
         'Easter': EasterItemFactory,
         'Halloween': HalloweenItemFactory
     }
+
     """
     Holiday Factory Mapping is a dictionary to map a holiday to its
     appropriate factory class.
     """
     def __init__(self, order_number, holiday, product_id, item,
                  name, quantity, **kwargs):
+        """
+        Initialize an Order
+        :param order_number: a str, the number assigned to an order
+        :param holiday: a str, the representative holiday of the order
+        :param product_id: a str, the product code for the order
+        :param item: a str, the type of item, either Toy, StuffedAnimal,
+        or Candy
+        :param name: a str, the name of the item assigned to this
+        order
+        :param quantity: an int, the number of production for the order
+        :param kwargs: Additional fields for product details
+        :returns: None
+        """
         self.order_number = order_number
         self.product_id = product_id
         self.item = item
@@ -112,9 +136,18 @@ class Order:
         self.holiday = holiday
         self.quantity = quantity
 
-    def __repr__(self):
+    def __str__(self):
         return f"Order {self.order_number}, " \
                f"Item {self.item}, " \
                f"Product ID {self.product_id}, " \
                f"Name \"{self.name}\", " \
                f"Quantity {self.quantity}"
+
+    def __repr__(self):
+        return f"Order {self.order_number}, " \
+            f"Item {self.item}, " \
+            f"Product ID {self.product_id}, " \
+            f"Name \"{self.name}\", " \
+            f"Quantity {self.quantity}"
+
+

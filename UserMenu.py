@@ -1,13 +1,22 @@
+"""
+This module contains the UserMenu class which allows clients to interact
+with store
+"""
+
 from Store import Store
 from OrderProcessor import OrderProcessor, Order
 
 
 class UserMenu:
     """
-
+    An UserMenu is an interface for an user to use to interact with
+    the Store.
     """
 
     def __init__(self):
+        """
+        Initialize an UserMenu
+        """
         self.store = Store()
         self.user_menu_map = {
             "1": self.store.menu_order_processing,
@@ -17,8 +26,8 @@ class UserMenu:
 
     def prompt_menu(self):
         """
-
-        :return:
+        Display the menu to the user
+        :return: None
         """
         invalid_selection = True
         menu_option = None
@@ -31,10 +40,10 @@ class UserMenu:
                 ">>>")
             try:
                 menu_option_selected = self.user_menu_map[option]
+                menu_option = menu_option_selected()
             except (KeyError, ValueError, AttributeError) as e:
                 print("Invalid Selection")
             else:
-                menu_option = menu_option_selected()
                 if option == "3":
                     print("Exiting Program\n"
                           "Creating Daily Transaction Report")

@@ -25,7 +25,7 @@ class Store:
 
     def validate_order(self, order) -> bool:
         """
-        Validates an order for any discrepanicies before processing.
+        Validates an order for any discrepancies before processing.
         :param order: Order object
         :return: bool, True if valid
         """
@@ -82,7 +82,6 @@ class Store:
                     yield candy
 
         except Exception as e:
-            print(f"Error in Order {order.order_number}")
             self.order_records[
                 order.order_number] = f"Order {order.order_number}, " \
                                       f"Could not " \
@@ -92,7 +91,7 @@ class Store:
                                       f" {e}"
 
         else:
-            print(f"Successfully processed Order {order.order_number}")
+            pass
 
     def daily_transaction_report(self):
         """
@@ -109,17 +108,20 @@ class Store:
                 today,
                 "%d-%m-%Y %H:%M\n\n"))
             for order in self.order_records.values():
-                print(order)
-                file_output.write(order)
+                if type(order) == str:
+                    file_output.write(order.replace("'", "") + "\n")
+
+                else:
+                    file_output.write(order.__repr__() + "\n")
 
     def process_order(self, product_id, quantity_requested, product_name) -> \
             int:
         """
         Processes an order by removing items sold and returning the number
         of items unfulfilled in the order.
-        :param product_id: str, product id of the item being processed
-        :param quantity_requested: int, requested number of items to be sold
-        :param product_name: str, name of the item
+        :param product_id: a str, product id of the item being processed
+        :param quantity_requested: an int, requested number of items to be sold
+        :param product_name: a str, name of the item
         :return: int, the number of items unfulfilled
         """
         if product_id not in self.inventory.keys():

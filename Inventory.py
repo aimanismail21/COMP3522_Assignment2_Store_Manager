@@ -1,16 +1,10 @@
 """
 Maintains the store inventory.
 
-Manages Toys, Stuffed Animals, and Candy objects.
+Manages Toys, Stuffed Animals, and Candy objects and ItemFactory.
 """
 from abc import ABC, abstractmethod
 
-#todo concrete item classes should raises errors if properties are invalid
-# or missing
-
-# todo errors raised in concrete item classes must be caught in higher level
-#  modules (item factories) where the error will result in the order being
-#  invalidated with the proper reason why the error occured.
 
 class InvalidDataError(Exception):
     """
@@ -25,6 +19,7 @@ class InvalidDataError(Exception):
         :param error_message: a str, the message that contains the error
         which raised InvalidDataError
         """
+
         super().__init__(f"InvalidDataError - {error_message}")
         self.missing_word = error_message
 
@@ -306,7 +301,7 @@ class SantasWorkShop(Toy):
     def __init__(self, dimensions, num_rooms, **kwargs):
         """
         Initialize a SantasWorkShop
-        :param dimensions: a tuple #todo
+        :param dimensions: a str, the dimensions of the workshop
         :param num_rooms: an int, the number of rooms
         :param kwargs: Any additional keyword attributes for base class
         :raises: InvalidDataError, when an attribute is assigned an
@@ -321,14 +316,6 @@ class SantasWorkShop(Toy):
                 raise InvalidDataError("SantasWorkshop: Number of rooms"
                                        "is not in length by width")
 
-        #todo
-        # for dimension in dimensions:
-        #     if type(dimension) != int:
-        #         raise InvalidDataError("SantasWorkshop: Number of rooms"
-        #                                "is not an integer")
-        # if type(num_rooms) != int:
-        #     raise InvalidDataError("SantasWorkshop: Number of rooms is not an"
-        #                            "integer value")
         self._dimensions = dimensions
         self._num_rooms = num_rooms
 
