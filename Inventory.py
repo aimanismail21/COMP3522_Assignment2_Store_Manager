@@ -215,20 +215,20 @@ class StuffedAnimal(ABC):
         :param product_id: a str, the product id of the StuffedAnimal
         """
 
-        stuffing_options = ['polyester fiberfill', 'wool']
-        size_options = ['small', 'medium', 'large']
+        stuffing_options = ['polyester fibrefill', 'wool']
+        size_options = ['s', 'm', 'l']
         fabric_options = ['linen', 'cotton', 'acrylic']
 
         if not stuffing or stuffing.lower() not in stuffing_options:
             raise InvalidDataError("StuffedAnimal: "
                                    "stuffing must be polyester fiberfill"
-                                   "or wool")
+                                   " or wool")
         self.stuffing = stuffing
 
         if not size or size.lower() not in size_options:
             raise InvalidDataError("StuffedAnimal: "
                                    "size must be small medium "
-                                   "or large")
+                                   "or large in s, m l respectively")
 
         self.size = size
 
@@ -486,9 +486,11 @@ class PumpkinCaramelToffee(Candy):
         """
         super().__init__(**kwargs)
 
-        if not variety or variety.lower() not in variety:
-            raise InvalidDataError("EasterBunny: Color has either be"
-                                   "orange, blue, pink or nothing else")
+        varieties = ['sea salt', 'regular']
+
+        if not variety or variety.lower() not in varieties:
+            raise InvalidDataError("PumpkinCaramelToffee: Color has either be"
+                                   " orange, blue, pink or nothing else")
         self.variety = variety
 
 
@@ -497,10 +499,10 @@ class CandyCane(Candy):
     Candy cane is a candy that is lactose free and contain no nuts.
     """
 
-    def __init__(self, stripes, **kwargs):
+    def __init__(self, colour, **kwargs):
         """
         Initialize a Candy Cane
-        :param stripes: a string, the colour of the stripes
+        :param colour: a string, the colour of the stripes
         :param kwargs: Any additional keyword attributes for base class.
         :raises: InvalidDataError, when an attribute is assigned an
         invalid data type or given data that does not meet requirements
@@ -509,11 +511,11 @@ class CandyCane(Candy):
 
         stripe_options = ['red', 'green']
 
-        if not stripes or stripes.lower() not in stripe_options:
+        if not colour or colour.lower() not in stripe_options:
             raise InvalidDataError("CandyCane: Stripe has either be"
                                    "red or green")
 
-        self.stripes = stripes
+        self.stripes = colour
 
 
 class CremeEgg(Candy):

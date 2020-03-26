@@ -65,20 +65,34 @@ class Store:
         :param quantity: int, number of items to create
         :return: None
         """
-        factory = order.factory()
-        number_to_create = self._number_of_items_to_create - quantity
-        for number_of_items_to_creates \
-                in range(0, number_to_create):
-            if order.item == "Toy":
-                toy = factory.create_toy(**order.product_details)
-                yield toy
-            if order.item == "StuffedAnimal":
-                stuffed_animal = factory.create_stuffed_animal(
-                    **order.product_details)
-                yield stuffed_animal
-            if order.item == "Candy":
-                candy = factory.create_candy(**order.product_details)
-                yield candy
+
+        try:
+            factory = order.factory()
+            number_to_create = self._number_of_items_to_create - quantity
+            for number_of_items_to_creates \
+                    in range(0, number_to_create):
+                if order.item == "Toy":
+                    toy = factory.create_toy(**order.product_details)
+                    yield toy
+                if order.item == "StuffedAnimal":
+                    stuffed_animal = factory.create_stuffed_animal(
+                        **order.product_details)
+                    yield stuffed_animal
+                if order.item == "Candy":
+                    candy = factory.create_candy(**order.product_details)
+                    yield candy
+
+        except Exception as e:
+            self.order_records[
+                order.order_number] = f"Order {order.order_number}, " \
+                                      f"Could not " \
+                                      f"process order as" \
+                                      f" data was corrupted," \
+                                      f" InvalidDataError -" \
+                                      f" {e}"
+
+        else:
+            print(f"Successfully processed order {order.order_number}")
 
     def daily_transaction_report(self):
         """
