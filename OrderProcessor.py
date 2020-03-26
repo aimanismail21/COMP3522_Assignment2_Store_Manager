@@ -1,6 +1,8 @@
 """
 Contains all the classes and logic related to orders, reading order files.
 """
+import enum
+
 import pandas as pd
 from Inventory import ChristmasItemFactory, EasterItemFactory, HalloweenItemFactory
 
@@ -64,7 +66,6 @@ class OrderProcessor:
             order = Order(**row[1])
             yield order
 
-
 class Order:
     """
     An Order is an analogy for an business transaction that orders
@@ -72,7 +73,7 @@ class Order:
     like order number, product ids.
     """
     #  todo test that mapping works
-    holiday_factory_mapping = {
+    factory_mapping = {
         'Christmas': ChristmasItemFactory,
         'Easter': EasterItemFactory,
         'Halloween': HalloweenItemFactory
@@ -89,7 +90,8 @@ class Order:
         self.name = name
         self.product_details = {key: value for key, value
                                 in kwargs.items() if value != 'NaN'}
-        self.factory = Order.holiday_factory_mapping[holiday]
+        self.product_details[name] = name
+        self.factory = Order.factory_mapping[holiday]
         self.holiday = holiday
 
 

@@ -24,8 +24,9 @@ class UserMenu:
         store = Store()
         for order in new_order_processing.create_order_from_order_file():
             # store receives the order and appends to its record
-            store.validate_order(order)
-
+            valid = store.validate_order(order)
+            if valid:
+                store.process_order(order)
 
 
     def __init__(self):
