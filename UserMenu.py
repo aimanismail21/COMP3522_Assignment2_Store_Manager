@@ -21,17 +21,18 @@ class UserMenu:
         new_order_processing = OrderProcessor()
         new_order_processing.file_name_request()
         new_order_processing.read_order_file()
-        print(new_order_processing.create_order_from_order_file())
+        store = Store()
         for order in new_order_processing.create_order_from_order_file():
             # store receives the order and appends to its record
+            store.validate_order(order)
 
 
 
     def __init__(self):
         self.user_menu_map = {
-            # todo test mapping
+
             "1": UserMenu.menu_order_processing,
-            "2": Inventory,
+            "2": Inventory, # todo test mapping
             "3": Store.daily_transaction_report
         }
 
@@ -43,14 +44,14 @@ class UserMenu:
         invalid_selection = True
         while invalid_selection:
             option = input(
-                "Welcome!\nSelect option by inputting a digit.\n"
+                "\nSelect option by inputting a digit.\n"
                 "1: Process Web Orders\n"
                 "2. Check Inventory\n"
-                "3. Exit Program\n")
+                "3. Exit Program\n"
+                ">>>")
             try:
                 menu_option_selected = self.user_menu_map[option]
-            except (KeyError, ValueError) as e:
-                traceback.print_tb(e)
+            except (KeyError, ValueError, AttributeError) as e:
                 print("Invalid Selection")
             else:
                 menu_option = menu_option_selected()
@@ -59,7 +60,7 @@ class UserMenu:
 
 def main():
     um = UserMenu()
-    um.menu_order_processing()
+    um.prompt_menu()
 
 if __name__ == '__main__':
     main()

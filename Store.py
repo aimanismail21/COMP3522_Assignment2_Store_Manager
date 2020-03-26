@@ -17,11 +17,27 @@ from OrderProcessor import Order
 
 class Store:
     def __init__(self):
-        # inventory of items
-        self.order_records = ["fake data", "fakedate"]
+        self.order_records = {}
 
-    def read_order(self, order: Order):
-        pass
+    def validate_order(self, order):
+        print(f"Processing Order {order.order_number}")
+        valid_order = True
+        invalid_data_reasons = []
+        if order.order_number in self.order_records:
+            valid_order = False
+            invalid_data_reasons.append("Order # Already ")
+        if order.holiday[0] != order.product_id[0] or order.item[0] != \
+                order.product_id[5]:
+            valid_order = False
+            invalid_data_reasons.append("Product ID has the wrong format.")
+        if not order.product_id[1:5].isdigit():
+            valid_order = False
+            invalid_data_reasons.append("Product ID has the wrong format.")
+
+
+
+            # Invalidate the order. Generate a dummy replacement order with
+            # an error msg.
 
     def order_items(self, item_factory):
         """

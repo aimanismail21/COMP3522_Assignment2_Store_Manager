@@ -51,12 +51,12 @@ class OrderProcessor:
         except FileNotFoundError as e:
             print("Unable to find file specified.")
         else:
-            print("Valid File Accepted")
+            print("File Accepted")
             temp_order.fillna('NaN', inplace=True)
             # Replaces None values (nan) with string.
             self.order_file = temp_order
         finally:
-            print("Finishing reading of file.")
+            print("File Loaded")
 
     def create_order_from_order_file(self):
         print("Creating Orders from Order File")
@@ -83,11 +83,6 @@ class Order:
     """
     def __init__(self, order_number, holiday, product_id, item,
                  name, **kwargs):
-        # todo error handling for incorrect values
-        # 1. product_id (first letter should be first letter of holiday
-        # followed by 4 digits and first letter of item type
-        # Ex. Christmas Stuffed Animal -> C1234S
-        # Could be more things to error check
         self.order_number = order_number
         self.product_id = product_id
         self.item = item
@@ -95,6 +90,7 @@ class Order:
         self.product_details = {key: value for key, value
                                 in kwargs.items() if value != 'NaN'}
         self.factory = Order.holiday_factory_mapping[holiday]
+        self.holiday = holiday
 
 
     def __repr__(self):
