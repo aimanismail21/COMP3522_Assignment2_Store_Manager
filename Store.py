@@ -6,12 +6,7 @@ Store contains the methods and classes responsible for:
 """
 import datetime
 
-
-# todo Special Requirements
-# The first time the store receives an order for an item, it is likely that it won't
-# have the item in it's inventory since the store should be initialized with an empty inventory.
-# In the event the store receives an order for an item that it does not have inventory for,
-# then it should go ahead and get a 100 of those items made by the corresponding factory class.
+from OrderProcessor import OrderProcessor
 
 
 class Store:
@@ -19,14 +14,14 @@ class Store:
     Store is where a user can process web orders, check inventory levels,
     and create a daily transaction report when exiting.
     """
+
     def __init__(self):
         """
         Initializes a Store class.
         """
         self.order_records = {}
-        self.inventory = {} # {productID: {'quantity': int, 'item': []}}
+        self.inventory = {}
         self._number_of_items_to_create = 100
-
 
     def validate_order(self, order) -> bool:
         """
@@ -72,7 +67,7 @@ class Store:
         """
         factory = order.factory()
         number_to_create = self._number_of_items_to_create - quantity
-        for number_of_items_to_creates\
+        for number_of_items_to_creates \
                 in range(0, number_to_create):
             if order.item == "Toy":
                 toy = factory.create_toy(**order.product_details)
@@ -121,7 +116,8 @@ class Store:
             product_ledger = self.inventory[product_id]
             item_list = product_ledger['item']
             if product_ledger['quantity'] < quantity_requested:
-                unfulfilled_orders = product_ledger['quantity'] - quantity_requested
+                unfulfilled_orders = product_ledger[
+                                         'quantity'] - quantity_requested
                 for item_to_remove in range(product_ledger['quantity']):
                     item_list.pop()
                 product_ledger['quantity'] = 0
@@ -145,4 +141,17 @@ class Store:
                   f"{product_line_ledger['quantity']},"
                   f" Stock Status: {stock_level}")
 
-
+    def menu_order_processing(self):
+        new_order_processing = OrderProcessor()
+        new_order_processing.file_name_request()
+        new_order_processing.read_order_file()
+        for order in new_order_processing.create_order_from_order_file():
+            valid = self.validate_order(order)
+            if valid:
+                unfufilled_quantity = self.process_order(order.product_id,
+                                                         order.quantity,
+                                                         order.name)
+                for item in self.create_items(order, unfufilled_quantity):
+                    product_ledger = self.inventory[order.product_id]
+                    product_ledger['quantity'] += 1
+                    product_ledger['item'].append(item)
