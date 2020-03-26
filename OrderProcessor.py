@@ -72,7 +72,6 @@ class Order:
     a variety of items with appropriate business attributes
     like order number, product ids.
     """
-    #  todo test that mapping works
     factory_mapping = {
         'Christmas': ChristmasItemFactory,
         'Easter': EasterItemFactory,

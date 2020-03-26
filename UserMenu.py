@@ -35,7 +35,10 @@ class UserMenu:
                 print("Invalid Selection")
             else:
                 menu_option = menu_option_selected()
-                invalid_selection = False
+                if option == "3":
+                    print("Exiting Program\n"
+                          "Creating Daily Transaction Report")
+                    invalid_selection = False
 
 
 def main():
