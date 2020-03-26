@@ -170,19 +170,17 @@ class Toy(ABC):
     create.
     """
 
-    def __init__(self, is_battery_operated, min_age, name, description,
+    def __init__(self, has_batteries, min_age, name, description,
                  product_id):
         """
         Initialize a toy.
         """
-        if type(is_battery_operated) != bool:
-            raise InvalidDataError("Toy: is_battery_operated must be"
-                                   "a bool.")
-        self.has_battery = is_battery_operated
+        if type(has_batteries) != bool:
+            raise InvalidDataError("Toy: has_batteries must be a bool.")
+        self.has_battery = has_batteries
 
-        if type(min_age) != int:
-            raise InvalidDataError("Toy: min_age must be"
-                                   "a bool.")
+        if type(min_age) != float:
+            raise InvalidDataError("Toy: min_age must be an int.")
         self.min_age = min_age
 
         if type(name) != str:
@@ -316,18 +314,21 @@ class SantasWorkShop(Toy):
         """
         super().__init__(**kwargs)
 
-        #todo
-        if len(dimensions) != 2:
-            raise InvalidDataError("SantasWorkshop: Number of rooms"
-                                   "is not in length by width")
-        #todo
-        for dimension in dimensions:
-            if type(dimension) != int:
+        dimensions_split = dimensions.split(',')
+
+        for dimension in dimensions_split:
+            if not dimension.isdigit():
                 raise InvalidDataError("SantasWorkshop: Number of rooms"
-                                       "is not an integer")
-        if type(num_rooms) != int:
-            raise InvalidDataError("SantasWorkshop: Number of rooms is not an"
-                                   "integer value")
+                                       "is not in length by width")
+
+        #todo
+        # for dimension in dimensions:
+        #     if type(dimension) != int:
+        #         raise InvalidDataError("SantasWorkshop: Number of rooms"
+        #                                "is not an integer")
+        # if type(num_rooms) != int:
+        #     raise InvalidDataError("SantasWorkshop: Number of rooms is not an"
+        #                            "integer value")
         self._dimensions = dimensions
         self._num_rooms = num_rooms
 
@@ -350,15 +351,16 @@ class RCSpider(Toy):
         :raises: InvalidDataError, when an attribute is assigned an
         invalid data type or given data that does not meet requirements
         """
-        fastest_toy_speed = 1.6
+        fastest_toy_speed = 16
         rc_spider_types = ['tarantula', 'wolf spider']
         super().__init__(**kwargs)
-        if type(speed) != int:
-            raise InvalidDataError("RCSpider: Must be given an integer")
+        if type(speed) != float:
+            raise InvalidDataError("RCSpider: Must be given a float "
+                                   "for speed")
 
         if speed >= fastest_toy_speed:
             raise InvalidDataError(f"RCSpider: Capped speed is"
-                                   f"{fastest_toy_speed} meters/seconds")
+                                   f" {fastest_toy_speed} meters/seconds")
 
         if speed < 0:
             raise InvalidDataError(f"RCSpider: Speed is negative")
@@ -391,7 +393,7 @@ class RobotBunny(Toy):
         """
         super().__init__(**kwargs)
         robot_bunny_colours = ['orange', 'blue', 'pink']
-        if type(num_sound) != int:
+        if type(num_sound) != float:
             raise InvalidDataError(f"RobotBunny: number of sound effect "
                                    f"must be an integer")
 
