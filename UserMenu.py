@@ -33,12 +33,12 @@ class UserMenu:
                     product_ledger = store.inventory[order.product_id]
                     product_ledger['quantity'] += 1
                     product_ledger['item'].append(item)
+        return store
 
     def __init__(self):
         self.user_menu_map = {
-
             "1": UserMenu.menu_order_processing,
-            "2": Inventory, # todo test mapping
+            "2": Store.check_inventory, # todo test mapping
             "3": Store.daily_transaction_report
         }
 
@@ -48,6 +48,7 @@ class UserMenu:
         :return:
         """
         invalid_selection = True
+        menu_option = None
         while invalid_selection:
             option = input(
                 "\nSelect option by inputting a digit.\n"

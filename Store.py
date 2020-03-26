@@ -15,13 +15,25 @@ import datetime
 
 
 class Store:
+    """
+    Store is where a user can process web orders, check inventory levels,
+    and create a daily transaction report when exiting.
+    """
     def __init__(self):
+        """
+        Initializes a Store class.
+        """
         self.order_records = {}
         self.inventory = {} # {productID: {'quantity': int, 'item': []}}
         self._number_of_items_to_create = 100
 
 
     def validate_order(self, order) -> bool:
+        """
+        Validates an order for any discrepanicies before processing.
+        :param order: Order object
+        :return: bool, True if valid
+        """
         print(f"Processing Order {order.order_number}")
         valid_order = True
         invalid_data_reasons = []
@@ -53,9 +65,10 @@ class Store:
 
     def create_items(self, order, quantity):
         """
-        Creates more items from a factory class
-        :param item_factory: a factory to produce a type of item
-        :return: an item
+        Creates an item using the order's item factory.
+        :param order: Order object, current order being processed
+        :param quantity: int, number of items to create
+        :return: None
         """
         factory = order.factory()
         number_to_create = self._number_of_items_to_create - quantity
@@ -73,9 +86,11 @@ class Store:
                 yield candy
 
     def daily_transaction_report(self):
-        # create a text file
-        # text file is a list of reco   rded orders in the day
-        # convention DTR_DDMMYY_HHMM.txt
+        """
+        Creates a daily transaction report that nicely formats the orders
+        processed during the day.
+        :return: None
+        """
         today = datetime.datetime.now()
         format_string = datetime.date.strftime(today, "DTR_%d%m%y_%H%M.txt")
         with open(format_string, mode="w", encoding="UTF-8") as file_output:
@@ -89,6 +104,14 @@ class Store:
 
     def process_order(self, product_id, quantity_requested, product_name) -> \
             int:
+        """
+        Processes an order by removing items sold and returning the number
+        of items unfulfilled in the order.
+        :param product_id: str, product id of the item being processed
+        :param quantity_requested: int, requested number of items to be sold
+        :param product_name: str, name of the item
+        :return: int, the number of items unfulfilled
+        """
         if product_id not in self.inventory.keys():
             self.inventory[product_id] = {'quantity': 0,
                                           'item': [],
@@ -105,6 +128,11 @@ class Store:
                 return unfulfilled_orders
 
     def check_inventory(self):
+        """
+        Reports the current inventory levels and status of each existing
+        product line.
+        :return: None
+        """
         for product_line_ledger in self.inventory.values():
             stock_level = "IN STOCK"
             if product_line_ledger['quantity'] == 0:
