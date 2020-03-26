@@ -17,7 +17,7 @@ import datetime
 class Store:
     def __init__(self):
         self.order_records = {}
-        self.inventory = {} # {productID: {}}
+        self.inventory = {} # {productID: {'quantity': int, 'item': []}}
         self._number_of_items_to_create = 100
 
     def validate_order(self, order) -> bool:
@@ -57,15 +57,19 @@ class Store:
         :return: an item
         """
         factory = self.factory()
+        number_to_create = self._number_of_items_to_create - quantity
         for number_of_items_to_creates\
-                in range(0, self._number_of_items_to_create):
+                in range(0, number_to_create):
             if order.item == "Toy":
                 toy = factory.create_toy(order.product_details)
+                yield toy
             if order.item == "StuffedAnimal":
                 stuffed_animal = factory.create_stuffed_animal(
                     order.product_details)
+                yield stuffed_animal
             if order.item == "Candy":
                 candy = factory.create_candy(order.product_details)
+                yield candy
 
     def daily_transaction_report(self):
         # create a text file
@@ -82,9 +86,19 @@ class Store:
             for order in self.order_records:
                 file_output.write(order)
 
-    def process_order(self, order) -> int:
-        if order.product_id in self.inventory.keys():
-            try:
-                for i in range(order.product_details['quantity']):
-                    create_items()
+    def process_order(self, product_id, quantity_requested) -> int:
+        if product_id not in self.inventory.keys():
+            self.inventory[product_id] = {'quantity': 0, 'item': []}
+            return quantity_requested
+        else:
+            product_ledger = self.inventory[product_id]
+            item_list = product_ledger['item']
+            if product_ledger['quantity'] < quantity_requested:
+                unfulfilled_orders = product_ledger['quantity'] - quantity_requested
+                for item_to_remove in range(product_ledger['quantity']):
+                    item_list.pop()
+                product_ledger['quantity'] = 0
+                return unfulfilled_orders
+
+
 
